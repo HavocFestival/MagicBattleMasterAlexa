@@ -1,0 +1,20 @@
+{
+  "name": "MagicBattleMasterAlexa",
+  "version": "1.0.0",
+  "description": "Alexa skill development project for MTG gaming",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HavocFestival/MagicBattleMasterAlexa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HavocFestival/MagicBattleMasterAlexa/issues"
+  },
+  "homepage": "https://github.com/HavocFestival/MagicBattleMasterAlexa#readme"
+}
