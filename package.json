@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/HavocFestival/MagicBattleMasterAlexa/issues"
   },
-  "homepage": "https://github.com/HavocFestival/MagicBattleMasterAlexa#readme"
+  "homepage": "https://github.com/HavocFestival/MagicBattleMasterAlexa#readme",
+  "dependencies": {
+    "ask-sdk": "^2.3.0",
+    "ask-sdk-core": "^2.3.0",
+    "aws-sdk": "^2.384.0",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
+  }
 }
