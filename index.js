@@ -12,7 +12,7 @@ AWS.config.update({ region: 'us-east-1' });
 
 //variables to keep on hand:
 const ALEXA_RESPONSES = {
-    skillName: 'Magic the Gathering Battle Master';
+    skillName: 'Magic the Gathering Battle Master'
 };
 
 //Handler builder & Intents:
