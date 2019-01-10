@@ -1,0 +1,446 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "battle master",
+            "intents": [{
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "WhatIs",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "HowTo",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "MainMenu",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "Terms",
+                    "slots": [{
+                        "name": "term",
+                        "type": "Terminologies"
+                    }],
+                    "samples": [
+                        "can you tell me what {term} means",
+                        "explain {term}"
+                    ]
+                }
+            ],
+            "types": [{
+                "name": "Terminologies",
+                "values": [{
+                        "name": {
+                            "value": "banding",
+                            "synonyms": [
+                                "banded",
+                                "banding"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "madness",
+                            "synonyms": [
+                                "madness"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "flanking",
+                            "synonyms": [
+                                "flanking"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "rampage",
+                            "synonyms": [
+                                "rampage"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "storm",
+                            "synonyms": [
+                                "storm"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "trample",
+                            "synonyms": [
+                                "trample"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "soulshift",
+                            "synonyms": [
+                                "soul shift"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "provoke",
+                            "synonyms": [
+                                "provoke"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "amplify",
+                            "synonyms": [
+                                "amplify"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "bushido",
+                            "synonyms": [
+                                "bus she do",
+                                "bush he do"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "vanishing",
+                            "synonyms": [
+                                "vanishing"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "affinity",
+                            "synonyms": [
+                                "affinity"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "horsemanship",
+                            "synonyms": [
+                                "horse man ship",
+                                "horseman ship"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "protection",
+                            "synonyms": [
+                                "protected",
+                                "protection"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "kicker",
+                            "synonyms": [
+                                "multi-kicker",
+                                "multi kicker",
+                                "kicker"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "flashback",
+                            "synonyms": [
+                                "flash back"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "fading",
+                            "synonyms": [
+                                "fading"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "evergreen",
+                            "synonyms": [
+                                "ever green"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "echo",
+                            "synonyms": [
+                                "echo"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "phasing",
+                            "synonyms": [
+                                "phasing"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "double strike",
+                            "synonyms": [
+                                "double strike"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "lifelink",
+                            "synonyms": [
+                                "life link"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "cycling",
+                            "synonyms": [
+                                "cycling"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "cumulative upkeep",
+                            "synonyms": [
+                                "cumulative upkeep"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "shadow",
+                            "synonyms": [
+                                "shadow"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "reach",
+                            "synonyms": [
+                                "reach"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "modular",
+                            "synonyms": [
+                                "modular"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "intimidate",
+                            "synonyms": [
+                                "intimidate"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "flying",
+                            "synonyms": [
+                                "flying"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "first strike",
+                            "synonyms": [
+                                "first strike"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "defender",
+                            "synonyms": [
+                                "defender"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "hexproof",
+                            "synonyms": [
+                                "hex proof"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "fear",
+                            "synonyms": [
+                                "fear"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "flash",
+                            "synonyms": [
+                                "flash"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "buyback",
+                            "synonyms": [
+                                "buy back"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "vigilance",
+                            "synonyms": [
+                                "vigilance"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "splice",
+                            "synonyms": [
+                                "splice"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "deathtouch",
+                            "synonyms": [
+                                "death touched",
+                                "death touch",
+                                "deathtouch"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "entwine",
+                            "synonyms": [
+                                "entwine"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "activated ability",
+                            "synonyms": [
+                                "activated ability"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "indestructible",
+                            "synonyms": [
+                                "indestructible"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "shroud",
+                            "synonyms": [
+                                "shourd"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "modal",
+                            "synonyms": [
+                                "modal"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "morph",
+                            "synonyms": [
+                                "morpher",
+                                "morphing",
+                                "morph"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "landwalk",
+                            "synonyms": [
+                                "landwalk",
+                                "land walk"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "haste",
+                            "synonyms": [
+                                "haste"
+                            ]
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "sunburst",
+                            "synonyms": [
+                                "sunburst",
+                                "sun burst"
+                            ]
+                        }
+                    }
+                ]
+            }]
+        }
+    }
+}

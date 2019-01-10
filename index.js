@@ -22,10 +22,12 @@ const skillBuilder = AlexaCore.SkillBuilders.custom();
 const WhatIsIntentHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
+
         return request.type === 'IntentRequest' &&
             request.intent.name === 'WhatIs';
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
+
 
     }
 };
@@ -36,7 +38,7 @@ const HowToIntentHandler = {
         return request.type === 'IntentRequest' &&
             request.intent.name === 'HowTo';
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
 
     }
 };
@@ -52,14 +54,27 @@ const MainMenuIntentHandler = {
     }
 };
 
-const TermsIntentHandler = {
+const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'Terms';
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
+        const userInput = handlerInput.requestEnvelope.request.intent.name;
+        String(userInput);
+        console.log(userInput);
 
+        let params = {
+            TableName: 'MBM_MagicTerms', //the DB table name that is being used.
+            Key: { "Name": userInput } //the item name that we're looking to grab
+        };
+
+        console.log("The handler output is: ");
+        console.log(params);
+
+        let dbQuery = await docClient.get(params).promise();
+        var speechOutput = dbQuery.Item;
     }
 };
 
@@ -74,21 +89,74 @@ const WhatIsIntentHandler = {
     }
 };
 
+//The following are the built-in Amazon Intent Handlers:
+const FallbackIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'AMAZON.FallbackIntent';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const CancelIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'AMAZON.CancelIntent';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const HelpIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'AMAZON.HelpIntent';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const StopIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'AMAZON.StopIntent';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const NavigateHomeIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'AMAZON.NavigateHomeIntent';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
     .addRequestHandlers(
-        GetGreetingIntent,
-        GetDrunkDrivingInfoIntent,
-        GetChargeIntent,
-        FindLawyerIntent,
-        MainMenuIntent,
-        MenuHelperIntent,
-        YesIntentHandler,
-        NoIntentHandler,
-        HelpHandler,
-        ExitHandler,
-        FallBackHandler,
-        SessionEndedRequestHandler
+        WhatIsIntentHandler,
+        HowToIntentHandler,
+        MainMenuIntentHandler,
+        TermsIntentHandler,
+        FallbackIntentHandler,
+        CancelIntentHandler,
+        HelpIntentHandler,
+        StopIntentHandler,
+        NavigateHomeIntentHandler
     )
 
 .addErrorHandlers(ErrorHandler)
