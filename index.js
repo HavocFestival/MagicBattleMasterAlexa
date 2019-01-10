@@ -1,4 +1,4 @@
-//Required files/documents/libraries to functoin
+//Required files/documents/libraries to function
 const Alexa = require('ask-sdk');
 const AlexaCore = require('ask-sdk-core');
 const AWS = require('aws-sdk');
@@ -12,104 +12,65 @@ AWS.config.update({ region: 'us-east-1' });
 
 //variables to keep on hand:
 const ALEXA_RESPONSES = {
-    skillName: 'Magic the Gathering Battle Mater'
+    skillName: 'Magic the Gathering Battle Master';
 };
 
 //Handler builder & Intents:
 const skillBuilder = AlexaCore.SkillBuilders.custom();
 
 //Initial Launch Request:
+const WhatIsIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'WhatIs';
+    },
+    handle(handlerInput) {
 
+    }
+};
 
-const NoIntentHandler = {
+const HowToIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'HowTo';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const MainMenuIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'MainMenu';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const TermsIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'Terms';
+    },
+    handle(handlerInput) {
+
+    }
+};
+
+const WhatIsIntentHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.NoIntent';
     },
     handle(handlerInput) {
-        agencyList = [];
-        var speechOutput = '';
 
-        var dispalyOutput = '';
-        return noHandlerBuilder(speechOutput, dispalyOutput, handlerInput); //agency list should be populated and loaded into this...
-    }
-};
-
-const HelpHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' &&
-            request.intent.name === 'AMAZON.HelpIntent';
-    },
-    handle(handlerInput) {
-
-        var speechOutput = '';
-
-        return skillIntroInfo(speechOutput, ALEXA_RESPONSES.helpMessage, handlerInput);
-    },
-};
-
-const ExitHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' &&
-            (request.intent.name === 'AMAZON.CancelIntent' ||
-                request.intent.name === 'AMAZON.StopIntent');
-    },
-    handle(handlerInput) {
-        return handlerInput.responseBuilder
-            .speak()
-            .withShouldEndSession(true)
-            .getResponse();
-    },
-};
-
-const RepeatHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' &&
-            request.intent.name === 'AMAZON.RepeatIntent';
-    },
-    handle(handlerInput) {
-        return handlerInput.responseBuilder
-            .reprompt();
-    }
-}
-
-const SessionEndedRequestHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'SessionEndedRequest';
-    },
-    handle(handlerInput) {
-        console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
-        return handlerInput.responseBuilder
-            .getResponse();
-    },
-};
-
-const ErrorHandler = {
-    canHandle() {
-        return true;
-    },
-    handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
-        return handleUnknown(handlerInput);
-    },
-};
-
-const FallBackHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' &&
-            request.intent.name === 'AMAZON.FallbackIntent';
-    },
-    handle(handlerInput) {
-        return handlerInput.responseBuilder
-            .speak()
-            .reprompt()
-            .getResponse();
     }
 };
 
