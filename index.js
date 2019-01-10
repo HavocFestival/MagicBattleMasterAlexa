@@ -12,7 +12,12 @@ AWS.config.update({ region: 'us-east-1' });
 
 //variables to keep on hand:
 const ALEXA_RESPONSES = {
-    skillName: 'Magic the Gathering Battle Master'
+    skillName: 'Magic the Gathering Battle Master',
+    openMessage: 'Welcome to Magic Battle Master, your fun source for Magic The Gathering game variations.  How would you like' +
+        'to get started?  You can say Main Menu if you want a summary of options or jump directly to what you want.',
+    reprompt: 'If you\'re not sure what to ask for, just say Main Menu for availble options.',
+    stopMessageSpeak: 'Thank you for using Magic Battle Master, please return for Magic The Gathering variations and terminology information. Goodbye!',
+
 };
 
 //Handler builder & Intents:
@@ -27,8 +32,15 @@ const WhatIsIntentHandler = {
             request.intent.name === 'WhatIs';
     },
     async handle(handlerInput) {
+        var speechOutput = "";
 
 
+        speechOutput = "What Is information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
@@ -39,7 +51,15 @@ const HowToIntentHandler = {
             request.intent.name === 'HowTo';
     },
     async handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "How To information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
@@ -50,7 +70,15 @@ const MainMenuIntentHandler = {
             request.intent.name === 'MainMenu';
     },
     handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "Main Menu information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
@@ -61,6 +89,7 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
             request.intent.name === 'Terms';
     },
     async handle(handlerInput) {
+        var speechOutput = "";
         const userInput = handlerInput.requestEnvelope.request.intent.name;
         String(userInput);
         console.log(userInput);
@@ -74,74 +103,107 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         console.log(params);
 
         let dbQuery = await docClient.get(params).promise();
-        var speechOutput = dbQuery.Item;
-    }
-};
+        var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
+        var reprompt = ALEXA_RESPONSES.reprompt;
+        speechOutput = "Main Menu information is pending...";
 
-const WhatIsIntentHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' &&
-            request.intent.name === 'AMAZON.NoIntent';
-    },
-    handle(handlerInput) {
-
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
 //The following are the built-in Amazon Intent Handlers:
-const FallbackIntentHandler = {
+const FallbackIntentHandler = { //fall back event if the user say something that is not understood.
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "Fallback information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
-const CancelIntentHandler = {
+const CancelIntentHandler = { //allow the user to cancel the currnt command and select something new
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.CancelIntent';
     },
     handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "Cancel information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
-const HelpIntentHandler = {
+const HelpIntentHandler = { //allow the user to get help with how to navigate the application.
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "Help information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
-const StopIntentHandler = {
+const StopIntentHandler = { //allow the use to stop the current skill entirely and close the application.
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.StopIntent';
     },
     handle(handlerInput) {
+        var speechOutput = ALEXA_RESPONSES.stopMessageSpeak;
 
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .withShouldEndSession(true)
+            .getResponse();
     }
 };
 
-const NavigateHomeIntentHandler = {
+const NavigateHomeIntentHandler = { //navigate back to the main menu from anything - this may not be required.
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'AMAZON.NavigateHomeIntent';
     },
     handle(handlerInput) {
+        var speechOutput = "";
 
+
+        speechOutput = "Navigate Home information is pending...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
     }
 };
 
