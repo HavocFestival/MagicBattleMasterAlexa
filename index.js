@@ -7,7 +7,7 @@ const parseString = require('xml2js').parseString;
 
 //DynamoDB information:
 var docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
-require('dotenv').config();
+//require('dotenv').config();
 AWS.config.update({ region: 'us-east-1' });
 
 //variables to keep on hand:
@@ -103,6 +103,8 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         console.log(params);
 
         let dbQuery = await docClient.get(params).promise();
+        console.log(dbQuery);
+        console.log(dbQuery.Item);
         var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = "Main Menu information is pending...";
@@ -206,6 +208,21 @@ const NavigateHomeIntentHandler = { //navigate back to the main menu from anythi
             .getResponse();
     }
 };
+
+const ErrorHandler = {
+    canHandle() {
+        return true;
+    },
+    handle(handlerInput, error) {
+        console.log(`Error handled: ${error.message}`);
+
+        return handlerInput.responseBuilder
+            .speak('Sorry, an error occurred.')
+            .reprompt('Sorry, an error occurred.')
+            .getResponse();
+    }
+};
+
 
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
