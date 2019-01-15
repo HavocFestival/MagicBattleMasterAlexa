@@ -97,6 +97,23 @@ const MainMenuIntentHandler = {
     }
 };
 
+async function GetMagicTerm(term) {
+    if (data_MagicTerms == undefined) {
+        let params = {
+            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
+        };
+
+        data_MagicTerms = await docClient.scan(params).promise();
+        data_MagicTerms = data_MagicTerms.Items;
+    }
+
+    for (let i = 0; i < data_MagicTerms.length; i++) {
+        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()) {
+            return data_MagicTerms[i].Description;
+        }
+    }
+    return undefined;
+}
 
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) { // NOTE: Will need to come back to this to restructor with Drew. - Separate Whatis from Terms???
@@ -110,10 +127,7 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
         console.log(userInput);
 
-        //var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
-        var descriptionOutput = GetMagicTerm(userInput);
-        console.log(descriptionOutput);
-
+        var descriptionOutput = await GetMagicTerm(userInput);
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = descriptionOutput;
 
