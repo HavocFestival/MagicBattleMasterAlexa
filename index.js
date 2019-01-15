@@ -84,10 +84,7 @@ const MainMenuIntentHandler = {
 };
 
 async function GetMagicTerm(term){
-    data_MagicTerms = undefined;
-    
     if (data_MagicTerms == undefined){
-        console.log("Load magic terms");
         let params = {
             TableName: 'MBM_MagicTerms' //the DB table name that is being used.
         };
@@ -95,8 +92,6 @@ async function GetMagicTerm(term){
         data_MagicTerms = await docClient.scan(params).promise();
         data_MagicTerms = data_MagicTerms.Items;
     }
-
-    console.log("Length: " + data_MagicTerms.length);
 
     for(let i = 0; i < data_MagicTerms.length; i++){
         if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()){
@@ -117,10 +112,7 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
         console.log(userInput);
 
-        //var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
-        var descriptionOutput = GetMagicTerm(userInput);
-        console.log(descriptionOutput);
-        
+        var descriptionOutput = await GetMagicTerm(userInput);        
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = descriptionOutput;
 
