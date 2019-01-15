@@ -29,7 +29,6 @@ const GreetingIntentHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'LaunchRequest';
-
     },
     handle(handlerInput) {
         var speechOutput = ALEXA_RESPONSES.openMessage;
@@ -104,9 +103,8 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
             request.intent.name === 'Terms';
     },
     async handle(handlerInput) {
-        request = handlerInput.requestEnvelope.request;
         var speechOutput = "";
-        const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
+        const userInput = handlerInput.requestEnvelope.request.intent.slots.term.resolutions.resolutionsPerAuthority[0].values[0].value.name;
         console.log(userInput);
 
         var descriptionOutput = await GetMagicTerm(userInput);
