@@ -4,10 +4,11 @@ const AlexaCore = require('ask-sdk-core');
 const AWS = require('aws-sdk');
 const request = require('request');
 const parseString = require('xml2js').parseString;
+var data_MagicTerms = undefined;
 
 //DynamoDB information:
 var docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
-require('dotenv').config();
+//require('dotenv').config();
 AWS.config.update({ region: 'us-east-1' });
 
 //variables to keep on hand:
@@ -95,6 +96,29 @@ const MainMenuIntentHandler = {
     }
 };
 
+async function GetMagicTerm(term){
+    data_MagicTerms = undefined;
+    
+    if (data_MagicTerms == undefined){
+        console.log("Load magic terms");
+        let params = {
+            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
+        };
+    
+        data_MagicTerms = await docClient.scan(params).promise();
+        data_MagicTerms = data_MagicTerms.Items;
+    }
+
+    console.log("Length: " + data_MagicTerms.length);
+
+    for(let i = 0; i < data_MagicTerms.length; i++){
+        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()){
+            return data_MagicTerms[i].Description;
+        }
+    }
+    return undefined;
+}
+
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) { // NOTE: Will need to come back to this to restructor with Drew. - Separate Whatis from Terms???
         const request = handlerInput.requestEnvelope.request;
@@ -105,6 +129,7 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         request = handlerInput.requestEnvelope.request;
         const userTerm = request.intent.slots.Terminologies.resolutions.resolutionsPerAuthority[0].values[0].value.name;
         var speechOutput = "";
+<<<<<<< HEAD
 
         String(userTerm);
         console.log(userTerm);
@@ -122,6 +147,17 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = "Main Menu information is pending..." + descriptionOutput;
+=======
+        const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
+        console.log(userInput);
+
+        //var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
+        var descriptionOutput = GetMagicTerm(userInput);
+        console.log(descriptionOutput);
+        
+        var reprompt = ALEXA_RESPONSES.reprompt;
+        speechOutput = descriptionOutput;
+>>>>>>> e6160f2751fd4342e7e53e114dce73bcf7afa7a9
 
         return handlerInput.responseBuilder
             .speak(speechOutput)
@@ -226,10 +262,22 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`Error handled: ${error.message}`);
+<<<<<<< HEAD
         return handleUnknown(handlerInput);
     },
 };
 
+=======
+
+        return handlerInput.responseBuilder
+            .speak('Sorry, an error occurred.')
+            .reprompt('Sorry, an error occurred.')
+            .getResponse();
+    }
+};
+
+
+>>>>>>> e6160f2751fd4342e7e53e114dce73bcf7afa7a9
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
     .addRequestHandlers(
