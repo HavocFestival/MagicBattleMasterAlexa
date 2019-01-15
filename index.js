@@ -28,7 +28,8 @@ const skillBuilder = AlexaCore.SkillBuilders.custom();
 const GreetingIntentHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'LaunchRequest'
+        return request.type === 'LaunchRequest';
+
     },
     handle(handlerInput) {
         var speechOutput = ALEXA_RESPONSES.openMessage;
@@ -96,28 +97,6 @@ const MainMenuIntentHandler = {
     }
 };
 
-async function GetMagicTerm(term){
-    data_MagicTerms = undefined;
-    
-    if (data_MagicTerms == undefined){
-        console.log("Load magic terms");
-        let params = {
-            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
-        };
-    
-        data_MagicTerms = await docClient.scan(params).promise();
-        data_MagicTerms = data_MagicTerms.Items;
-    }
-
-    console.log("Length: " + data_MagicTerms.length);
-
-    for(let i = 0; i < data_MagicTerms.length; i++){
-        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()){
-            return data_MagicTerms[i].Description;
-        }
-    }
-    return undefined;
-}
 
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) { // NOTE: Will need to come back to this to restructor with Drew. - Separate Whatis from Terms???
@@ -127,37 +106,16 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
     },
     async handle(handlerInput) {
         request = handlerInput.requestEnvelope.request;
-        const userTerm = request.intent.slots.Terminologies.resolutions.resolutionsPerAuthority[0].values[0].value.name;
         var speechOutput = "";
-<<<<<<< HEAD
-
-        String(userTerm);
-        console.log(userTerm);
-
-        let params = {
-            TableName: 'MBM_MagicTerms', //the DB table name that is being used.
-            Key: { "Name": userTerm } //the item name that we're looking to grab
-        };
-
-        console.log("The handler output is: ");
-        console.log(params);
-
-        let dbQuery = await docClient.get(params).promise();
-
-        var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
-        var reprompt = ALEXA_RESPONSES.reprompt;
-        speechOutput = "Main Menu information is pending..." + descriptionOutput;
-=======
         const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
         console.log(userInput);
 
         //var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
         var descriptionOutput = GetMagicTerm(userInput);
         console.log(descriptionOutput);
-        
+
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = descriptionOutput;
->>>>>>> e6160f2751fd4342e7e53e114dce73bcf7afa7a9
 
         return handlerInput.responseBuilder
             .speak(speechOutput)
@@ -262,12 +220,6 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`Error handled: ${error.message}`);
-<<<<<<< HEAD
-        return handleUnknown(handlerInput);
-    },
-};
-
-=======
 
         return handlerInput.responseBuilder
             .speak('Sorry, an error occurred.')
@@ -277,7 +229,6 @@ const ErrorHandler = {
 };
 
 
->>>>>>> e6160f2751fd4342e7e53e114dce73bcf7afa7a9
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
     .addRequestHandlers(
@@ -315,6 +266,29 @@ function replaceAmpersand(mString) {
 }
 
 //extra functions & items to be used:
+async function GetMagicTerm(term) {
+    data_MagicTerms = undefined;
+
+    if (data_MagicTerms == undefined) {
+        console.log("Load magic terms");
+        let params = {
+            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
+        };
+
+        data_MagicTerms = await docClient.scan(params).promise();
+        data_MagicTerms = data_MagicTerms.Items;
+    }
+
+    console.log("Length: " + data_MagicTerms.length);
+
+    for (let i = 0; i < data_MagicTerms.length; i++) {
+        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()) {
+            return data_MagicTerms[i].Description;
+        }
+    }
+    return undefined;
+}
+
 function doRequest(url) {
     return new Promise(function(resolve, reject) {
         request(url, (error, res, body) => {
