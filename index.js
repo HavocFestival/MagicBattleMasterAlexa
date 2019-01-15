@@ -97,24 +97,6 @@ const MainMenuIntentHandler = {
     }
 };
 
-async function GetMagicTerm(term) {
-    if (data_MagicTerms == undefined) {
-        let params = {
-            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
-        };
-
-        data_MagicTerms = await docClient.scan(params).promise();
-        data_MagicTerms = data_MagicTerms.Items;
-    }
-
-    for (let i = 0; i < data_MagicTerms.length; i++) {
-        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()) {
-            return data_MagicTerms[i].Description;
-        }
-    }
-    return undefined;
-}
-
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) { // NOTE: Will need to come back to this to restructor with Drew. - Separate Whatis from Terms???
         const request = handlerInput.requestEnvelope.request;
@@ -217,7 +199,6 @@ const NavigateHomeIntentHandler = { //navigate back to the main menu from anythi
     },
     handle(handlerInput) {
         var speechOutput = "";
-
 
         speechOutput = "Navigate Home information is pending...";
 
