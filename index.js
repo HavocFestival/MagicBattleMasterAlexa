@@ -24,6 +24,22 @@ const ALEXA_RESPONSES = {
 const skillBuilder = AlexaCore.SkillBuilders.custom();
 
 //Initial Launch Request:
+const GreetingIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'LaunchRequest'
+    },
+    handle(handlerInput) {
+        var speechOutput = ALEXA_RESPONSES.openMessage;
+        var reprompt = ALEXA_RESPONSES.reprompt;
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+
 const WhatIsIntentHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -31,9 +47,8 @@ const WhatIsIntentHandler = {
         return request.type === 'IntentRequest' &&
             request.intent.name === 'WhatIs';
     },
-    async handle(handlerInput) {
+    handle(handlerInput) {
         var speechOutput = "";
-
 
         speechOutput = "What Is information is pending...";
 
@@ -50,9 +65,8 @@ const HowToIntentHandler = {
         return request.type === 'IntentRequest' &&
             request.intent.name === 'HowTo';
     },
-    async handle(handlerInput) {
+    handle(handlerInput) {
         var speechOutput = "";
-
 
         speechOutput = "How To information is pending...";
 
@@ -72,7 +86,6 @@ const MainMenuIntentHandler = {
     handle(handlerInput) {
         var speechOutput = "";
 
-
         speechOutput = "Main Menu information is pending...";
 
         return handlerInput.responseBuilder
@@ -83,29 +96,32 @@ const MainMenuIntentHandler = {
 };
 
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
-    canHandle(handlerInput) {
+    canHandle(handlerInput) { // NOTE: Will need to come back to this to restructor with Drew. - Separate Whatis from Terms???
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' &&
             request.intent.name === 'Terms';
     },
     async handle(handlerInput) {
+        request = handlerInput.requestEnvelope.request;
+        const userTerm = request.intent.slots.Terminologies.resolutions.resolutionsPerAuthority[0].values[0].value.name;
         var speechOutput = "";
-        const userInput = handlerInput.requestEnvelope.request.intent.name;
-        String(userInput);
-        console.log(userInput);
+
+        String(userTerm);
+        console.log(userTerm);
 
         let params = {
             TableName: 'MBM_MagicTerms', //the DB table name that is being used.
-            Key: { "Name": userInput } //the item name that we're looking to grab
+            Key: { "Name": userTerm } //the item name that we're looking to grab
         };
 
         console.log("The handler output is: ");
         console.log(params);
 
         let dbQuery = await docClient.get(params).promise();
+
         var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
         var reprompt = ALEXA_RESPONSES.reprompt;
-        speechOutput = "Main Menu information is pending...";
+        speechOutput = "Main Menu information is pending..." + descriptionOutput;
 
         return handlerInput.responseBuilder
             .speak(speechOutput)
@@ -123,7 +139,6 @@ const FallbackIntentHandler = { //fall back event if the user say something that
     },
     handle(handlerInput) {
         var speechOutput = "";
-
 
         speechOutput = "Fallback information is pending...";
 
@@ -143,7 +158,6 @@ const CancelIntentHandler = { //allow the user to cancel the currnt command and 
     handle(handlerInput) {
         var speechOutput = "";
 
-
         speechOutput = "Cancel information is pending...";
 
         return handlerInput.responseBuilder
@@ -161,7 +175,6 @@ const HelpIntentHandler = { //allow the user to get help with how to navigate th
     },
     handle(handlerInput) {
         var speechOutput = "";
-
 
         speechOutput = "Help information is pending...";
 
@@ -207,9 +220,20 @@ const NavigateHomeIntentHandler = { //navigate back to the main menu from anythi
     }
 };
 
+const ErrorHandler = {
+    canHandle() {
+        return true;
+    },
+    handle(handlerInput, error) {
+        console.log(`Error handled: ${error.message}`);
+        return handleUnknown(handlerInput);
+    },
+};
+
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
     .addRequestHandlers(
+        GreetingIntentHandler,
         WhatIsIntentHandler,
         HowToIntentHandler,
         MainMenuIntentHandler,
@@ -321,7 +345,7 @@ function supportsDisplay(handlerInput) {
 
 function handleUnknown(pHandlerInput) {
     //For when Alexa doesn't understand the user
-    var speechOutput = '';
+    var speechOutput = 'Sorry, I didn\'t get that. Could you try again?';
     var reprompt = 'Could you try again?';
     const response = pHandlerInput.responseBuilder;
 

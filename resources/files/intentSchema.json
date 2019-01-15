@@ -44,6 +44,8 @@
                         "type": "Terminologies"
                     }],
                     "samples": [
+                        "what does {term} mean",
+                        "what is {term}",
                         "can you tell me what {term} means",
                         "explain {term}"
                     ]
@@ -53,7 +55,7 @@
                 "name": "Terminologies",
                 "values": [{
                         "name": {
-                            "value": "banding",
+                            "value": "Banding",
                             "synonyms": [
                                 "banded",
                                 "banding"
@@ -62,7 +64,7 @@
                     },
                     {
                         "name": {
-                            "value": "madness",
+                            "value": "Madness",
                             "synonyms": [
                                 "madness"
                             ]
@@ -70,7 +72,7 @@
                     },
                     {
                         "name": {
-                            "value": "flanking",
+                            "value": "Flanking",
                             "synonyms": [
                                 "flanking"
                             ]
@@ -78,7 +80,7 @@
                     },
                     {
                         "name": {
-                            "value": "rampage",
+                            "value": "Rampage",
                             "synonyms": [
                                 "rampage"
                             ]
@@ -86,7 +88,7 @@
                     },
                     {
                         "name": {
-                            "value": "storm",
+                            "value": "Storm",
                             "synonyms": [
                                 "storm"
                             ]
@@ -94,7 +96,7 @@
                     },
                     {
                         "name": {
-                            "value": "trample",
+                            "value": "Trample",
                             "synonyms": [
                                 "trample"
                             ]
@@ -102,7 +104,7 @@
                     },
                     {
                         "name": {
-                            "value": "soulshift",
+                            "value": "Soulshift",
                             "synonyms": [
                                 "soul shift"
                             ]
@@ -110,7 +112,7 @@
                     },
                     {
                         "name": {
-                            "value": "provoke",
+                            "value": "Provoke",
                             "synonyms": [
                                 "provoke"
                             ]
@@ -118,7 +120,7 @@
                     },
                     {
                         "name": {
-                            "value": "amplify",
+                            "value": "Amplify",
                             "synonyms": [
                                 "amplify"
                             ]
@@ -126,7 +128,7 @@
                     },
                     {
                         "name": {
-                            "value": "bushido",
+                            "value": "Bushido",
                             "synonyms": [
                                 "bus she do",
                                 "bush he do"
@@ -135,7 +137,7 @@
                     },
                     {
                         "name": {
-                            "value": "vanishing",
+                            "value": "Vanishing",
                             "synonyms": [
                                 "vanishing"
                             ]
@@ -143,7 +145,7 @@
                     },
                     {
                         "name": {
-                            "value": "affinity",
+                            "value": "Affinity",
                             "synonyms": [
                                 "affinity"
                             ]
@@ -151,7 +153,7 @@
                     },
                     {
                         "name": {
-                            "value": "horsemanship",
+                            "value": "Horsemanship",
                             "synonyms": [
                                 "horse man ship",
                                 "horseman ship"
@@ -160,7 +162,7 @@
                     },
                     {
                         "name": {
-                            "value": "protection",
+                            "value": "Protection",
                             "synonyms": [
                                 "protected",
                                 "protection"
@@ -169,7 +171,7 @@
                     },
                     {
                         "name": {
-                            "value": "kicker",
+                            "value": "Kicker",
                             "synonyms": [
                                 "multi-kicker",
                                 "multi kicker",
@@ -179,7 +181,7 @@
                     },
                     {
                         "name": {
-                            "value": "flashback",
+                            "value": "Flashback",
                             "synonyms": [
                                 "flash back"
                             ]
@@ -187,7 +189,7 @@
                     },
                     {
                         "name": {
-                            "value": "fading",
+                            "value": "Fading",
                             "synonyms": [
                                 "fading"
                             ]
@@ -195,7 +197,7 @@
                     },
                     {
                         "name": {
-                            "value": "evergreen",
+                            "value": "Evergreen",
                             "synonyms": [
                                 "ever green"
                             ]
@@ -203,7 +205,7 @@
                     },
                     {
                         "name": {
-                            "value": "echo",
+                            "value": "Echo",
                             "synonyms": [
                                 "echo"
                             ]
@@ -211,7 +213,7 @@
                     },
                     {
                         "name": {
-                            "value": "phasing",
+                            "value": "Phasing",
                             "synonyms": [
                                 "phasing"
                             ]
@@ -219,7 +221,7 @@
                     },
                     {
                         "name": {
-                            "value": "double strike",
+                            "value": "Double strike",
                             "synonyms": [
                                 "double strike"
                             ]
@@ -227,7 +229,7 @@
                     },
                     {
                         "name": {
-                            "value": "lifelink",
+                            "value": "Lifelink",
                             "synonyms": [
                                 "life link"
                             ]
@@ -235,7 +237,7 @@
                     },
                     {
                         "name": {
-                            "value": "cycling",
+                            "value": "Cycling",
                             "synonyms": [
                                 "cycling"
                             ]
@@ -243,7 +245,7 @@
                     },
                     {
                         "name": {
-                            "value": "cumulative upkeep",
+                            "value": "Cumulative upkeep",
                             "synonyms": [
                                 "cumulative upkeep"
                             ]
@@ -251,7 +253,7 @@
                     },
                     {
                         "name": {
-                            "value": "shadow",
+                            "value": "Shadow",
                             "synonyms": [
                                 "shadow"
                             ]
@@ -259,7 +261,7 @@
                     },
                     {
                         "name": {
-                            "value": "reach",
+                            "value": "Reach",
                             "synonyms": [
                                 "reach"
                             ]
@@ -267,7 +269,7 @@
                     },
                     {
                         "name": {
-                            "value": "modular",
+                            "value": "Modular",
                             "synonyms": [
                                 "modular"
                             ]
@@ -275,7 +277,7 @@
                     },
                     {
                         "name": {
-                            "value": "intimidate",
+                            "value": "Intimidate",
                             "synonyms": [
                                 "intimidate"
                             ]
@@ -283,7 +285,7 @@
                     },
                     {
                         "name": {
-                            "value": "flying",
+                            "value": "Flying",
                             "synonyms": [
                                 "flying"
                             ]
@@ -291,7 +293,7 @@
                     },
                     {
                         "name": {
-                            "value": "first strike",
+                            "value": "First strike",
                             "synonyms": [
                                 "first strike"
                             ]
@@ -299,7 +301,7 @@
                     },
                     {
                         "name": {
-                            "value": "defender",
+                            "value": "Defender",
                             "synonyms": [
                                 "defender"
                             ]
@@ -307,7 +309,7 @@
                     },
                     {
                         "name": {
-                            "value": "hexproof",
+                            "value": "Hexproof",
                             "synonyms": [
                                 "hex proof"
                             ]
@@ -315,7 +317,7 @@
                     },
                     {
                         "name": {
-                            "value": "fear",
+                            "value": "Fear",
                             "synonyms": [
                                 "fear"
                             ]
@@ -323,7 +325,7 @@
                     },
                     {
                         "name": {
-                            "value": "flash",
+                            "value": "Flash",
                             "synonyms": [
                                 "flash"
                             ]
@@ -331,7 +333,7 @@
                     },
                     {
                         "name": {
-                            "value": "buyback",
+                            "value": "Buyback",
                             "synonyms": [
                                 "buy back"
                             ]
@@ -339,7 +341,7 @@
                     },
                     {
                         "name": {
-                            "value": "vigilance",
+                            "value": "Vigilance",
                             "synonyms": [
                                 "vigilance"
                             ]
@@ -347,7 +349,7 @@
                     },
                     {
                         "name": {
-                            "value": "splice",
+                            "value": "Splice",
                             "synonyms": [
                                 "splice"
                             ]
@@ -355,7 +357,7 @@
                     },
                     {
                         "name": {
-                            "value": "deathtouch",
+                            "value": "Deathtouch",
                             "synonyms": [
                                 "death touched",
                                 "death touch",
@@ -365,7 +367,7 @@
                     },
                     {
                         "name": {
-                            "value": "entwine",
+                            "value": "Entwine",
                             "synonyms": [
                                 "entwine"
                             ]
@@ -373,7 +375,7 @@
                     },
                     {
                         "name": {
-                            "value": "activated ability",
+                            "value": "Activated ability",
                             "synonyms": [
                                 "activated ability"
                             ]
@@ -381,7 +383,7 @@
                     },
                     {
                         "name": {
-                            "value": "indestructible",
+                            "value": "Indestructible",
                             "synonyms": [
                                 "indestructible"
                             ]
@@ -389,7 +391,7 @@
                     },
                     {
                         "name": {
-                            "value": "shroud",
+                            "value": "Shroud",
                             "synonyms": [
                                 "shourd"
                             ]
@@ -397,7 +399,7 @@
                     },
                     {
                         "name": {
-                            "value": "modal",
+                            "value": "Modal",
                             "synonyms": [
                                 "modal"
                             ]
@@ -405,7 +407,7 @@
                     },
                     {
                         "name": {
-                            "value": "morph",
+                            "value": "Morph",
                             "synonyms": [
                                 "morpher",
                                 "morphing",
@@ -415,7 +417,7 @@
                     },
                     {
                         "name": {
-                            "value": "landwalk",
+                            "value": "Landwalk",
                             "synonyms": [
                                 "landwalk",
                                 "land walk"
@@ -424,7 +426,7 @@
                     },
                     {
                         "name": {
-                            "value": "haste",
+                            "value": "Haste",
                             "synonyms": [
                                 "haste"
                             ]
@@ -432,7 +434,7 @@
                     },
                     {
                         "name": {
-                            "value": "sunburst",
+                            "value": "Sunburst",
                             "synonyms": [
                                 "sunburst",
                                 "sun burst"
