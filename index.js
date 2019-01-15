@@ -4,6 +4,7 @@ const AlexaCore = require('ask-sdk-core');
 const AWS = require('aws-sdk');
 const request = require('request');
 const parseString = require('xml2js').parseString;
+var data_MagicTerms = undefined;
 
 //DynamoDB information:
 var docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
@@ -82,6 +83,29 @@ const MainMenuIntentHandler = {
     }
 };
 
+async function GetMagicTerm(term){
+    data_MagicTerms = undefined;
+    
+    if (data_MagicTerms == undefined){
+        console.log("Load magic terms");
+        let params = {
+            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
+        };
+    
+        data_MagicTerms = await docClient.scan(params).promise();
+        data_MagicTerms = data_MagicTerms.Items;
+    }
+
+    console.log("Length: " + data_MagicTerms.length);
+
+    for(let i = 0; i < data_MagicTerms.length; i++){
+        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()){
+            return data_MagicTerms[i].Description;
+        }
+    }
+    return undefined;
+}
+
 const TermsIntentHandler = { //pick from the terms that the user has asked abou
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -90,24 +114,15 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
     },
     async handle(handlerInput) {
         var speechOutput = "";
-        const userInput = handlerInput.requestEnvelope.request.intent.name;
-        String(userInput);
+        const userInput = handlerInput.requestEnvelope.request.intent.slots.term.value;
         console.log(userInput);
 
-        let params = {
-            TableName: 'MBM_MagicTerms', //the DB table name that is being used.
-            Key: { "Name": userInput } //the item name that we're looking to grab
-        };
-
-        console.log("The handler output is: ");
-        console.log(params);
-
-        let dbQuery = await docClient.get(params).promise();
-        console.log(dbQuery);
-        console.log(dbQuery.Item);
-        var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
+        //var descriptionOutput = dbQuery.Item.Description; //capture the table info and push into variable.
+        var descriptionOutput = GetMagicTerm(userInput);
+        console.log(descriptionOutput);
+        
         var reprompt = ALEXA_RESPONSES.reprompt;
-        speechOutput = "Main Menu information is pending...";
+        speechOutput = descriptionOutput;
 
         return handlerInput.responseBuilder
             .speak(speechOutput)
