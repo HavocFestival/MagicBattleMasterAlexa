@@ -4,14 +4,10 @@ const AlexaCore = require('ask-sdk-core');
 const AWS = require('aws-sdk');
 const request = require('request');
 //const parseString = require('xml2js').parseString;
-var dataGame = {
-    ListObjects: undefined,
-    MagicTerms: undefined,
-    RollingCharts: undefined,
-    RandomCharts: undefined
-}
-
 const game = require("./game");
+
+var dataGame = new game.Data();
+
 
 //DynamoDB information:
 var db = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
@@ -113,16 +109,13 @@ const NewGameIntentHandler = {
     async handle(handlerInput) {
         var speechOutput = "";
         const numberOfPlayers = handlerInput.requestEnvelope.request.intent.slots.NumberOfPlayers.value;
-        console.log(numberOfPlayers);
 
-        var listObj = await GetListObjectByNameAndType("Archenemy", "TeamType");
-        console.log(listObj);
-        console.log(game);
+        await LoadDatabaseData();
+        var randomGame = dataGame.RandomCharts.random(numberOfPlayers);
 
-        //var descriptionOutput = await GetMagicTerm(userInput);
         var reprompt = ALEXA_RESPONSES.reprompt;
-        //speechOutput = descriptionOutput;
-        speechOutput = "Starting a " + numberOfPlayers + " player game...";
+        //speechOutput = "Starting a " + numberOfPlayers + " player game...";
+        speechOutput = randomGame.Annoucement;
 
         return handlerInput.responseBuilder
             .speak(speechOutput)

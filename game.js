@@ -1,3 +1,23 @@
+class Data {
+    constructor() {
+        this.ListObjects = undefined;
+        this.MagicTerms = undefined;
+        this.RollingCharts = undefined;
+        this.RandomCharts = undefined;
+        this.Game = undefined;
+    }
+
+    newGame(numPlayers){
+        let rGame = this.RandomCharts().random(numPlayers);
+
+        //if (rGame.BuildType.toLowerCase() == "{roll}"){
+        //    rGame.BuildType = this.RollingCharts.random()
+        //}
+
+        //this.Game = 
+    }
+}
+
 class ListObjects {
     constructor(data) {
         this.Items = [];
@@ -59,6 +79,39 @@ class RollingCharts {
             this.Items.push(new RollingChart(data[i]));
         }
     }
+
+    random(type, exclude) {
+        let list = [];
+        let item;
+        let range = 0;
+
+        if (exclude== undefined) { exclude = ""; }
+
+        //add items to list
+        for(let i = 0; i < this.Items.length; i++) {
+            item = this.Items[i]; 
+            if (item.ChartType.toLowerCase() == type.toLowerCase() &&
+                item.Name.toLowerCase() != exclude.toLowerCase() && //Exclude these options (used for roll again and not:assassin)
+                item.IsAddon == false &&        //ADDON
+                item.IsSupplemental == false)   //SUPPLEMENTAL
+                {
+                    list.push(item);
+                    range += item.Chance;
+                }
+        }
+
+        let roll = Math.floor((Math.random() * range) + 1);
+        for(let i = 0; i < list.length; i++){
+            if (roll <= list[i].Chance) {
+                return list[i];
+            }
+            else {
+                roll -= list[i].Chance; //Lower roll by missed chance
+            }
+        }
+
+        return "?"; // This shouldn't be reachable =(
+    }
 }
 class RollingChart {
     constructor(data) {
@@ -82,6 +135,32 @@ class RandomCharts {
         }
     }
 
+    random(numPlayers) {
+        let list = [];
+        let item;
+        let range = 0;
+
+        //Build list of options based on number of players
+        for(let i = 0; i < this.Items.length; i++){
+            item = this.Items[i];
+            if (item.NumberOfPlayers == numPlayers){
+                list.push(item);
+                range += item.Chance;
+            }
+        }
+
+        let roll = Math.floor((Math.random() * range) + 1);
+        for(let i = 0; i < list.length; i++){
+            if (roll <= list[i].Chance) {
+                return list[i];
+            }
+            else {
+                roll -= list[i].Chance; //Lower roll by missed chance
+            }
+        }
+
+        return "?"; // This shouldn't be reachable =(
+    }
 }
 class RandomChart {
     constructor(data) {
@@ -112,6 +191,7 @@ class GameObject {
         this.TeamType = undefined;
     }
 
+
 }
 
 
@@ -130,5 +210,5 @@ exports.MagicTerms = MagicTerms;
 exports.RollingCharts = RollingCharts;
 exports.RandomCharts = RandomCharts;
 exports.GameObject = GameObject;
-
+exports.Data = Data;
 
