@@ -1,3 +1,21 @@
+class ListObjects {
+    constructor(data) {
+        this.Items = [];
+        
+        for(let i = 0; i < data.length; i++){
+            this.Items.push(new ListObject(data[i]));
+        }
+    }
+
+    findByNameAndType(name, type) {
+        for(let i = 0; i < this.Items.length; i++){
+            if (this.Items[i].Name.toLowerCase() == name.toLowerCase() &&
+                this.Items[i].Type.toLowerCase() == type.toLowerCase())
+                return this.Items[i];
+        }
+        return undefined;
+    }
+}
 class ListObject {
     constructor(data) {
         this.Name = FormatString(data.Name);
@@ -9,6 +27,24 @@ class ListObject {
     }
 }
 
+class MagicTerms {
+    constructor(data){
+        this.Items = [];
+
+        for(let i = 0; i < data.length; i++){
+            this.Items.push(new MagicTerm(data[i]));
+        }
+    }
+
+    find(term) {
+        for(let i = 0; i < this.Items.length; i++){
+            if (this.Items[i].Name.toLowerCase() == term.toLowerCase()){
+                return this.Items[i].Description;
+            }
+        }
+        return "Sorry, I don't know that Magic term."
+    }
+}
 class MagicTerm {
     constructor(data) {
         this.Name = FormatString(data.Name);
@@ -16,6 +52,14 @@ class MagicTerm {
     }
 }
 
+class RollingCharts {
+    constructor(data){
+        this.Items = [];
+        for(let i = 0; i < data.length; i++){
+            this.Items.push(new RollingChart(data[i]));
+        }
+    }
+}
 class RollingChart {
     constructor(data) {
         this.Id = data.Id;
@@ -29,6 +73,16 @@ class RollingChart {
     }
 }
 
+class RandomCharts {
+    constructor(data) {
+        this.Items = [];
+
+        for (let i = 0; i < data.length; i++){
+            this.Items.push(new RandomChart(data[i]));
+        }
+    }
+
+}
 class RandomChart {
     constructor(data) {
         this.Id = data.Id;
@@ -71,6 +125,10 @@ function FormatBool(data) {
     return data;
 }
 
-exports.ListObject = ListObject;
-exports.MagicTerm = MagicTerm;
+exports.ListObjects = ListObjects;
+exports.MagicTerms = MagicTerms;
+exports.RollingCharts = RollingCharts;
+exports.RandomCharts = RandomCharts;
+exports.GameObject = GameObject;
+
 

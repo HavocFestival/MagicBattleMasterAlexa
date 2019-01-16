@@ -3,14 +3,18 @@ const Alexa = require('ask-sdk');
 const AlexaCore = require('ask-sdk-core');
 const AWS = require('aws-sdk');
 const request = require('request');
-const parseString = require('xml2js').parseString;
-var data_MagicTerms = undefined;
-var data_ListObjects = undefined;
+//const parseString = require('xml2js').parseString;
+var dataGame = {
+    ListObjects: undefined,
+    MagicTerms: undefined,
+    RollingCharts: undefined,
+    RandomCharts: undefined
+}
 
 const game = require("./game");
 
 //DynamoDB information:
-var docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
+var db = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 //require('dotenv').config();
 AWS.config.update({ region: 'us-east-1' });
 
@@ -115,9 +119,6 @@ const NewGameIntentHandler = {
         console.log(listObj);
         console.log(game);
 
-        var g = new game.ListObject(listObj);
-        console.log(g);
-
         //var descriptionOutput = await GetMagicTerm(userInput);
         var reprompt = ALEXA_RESPONSES.reprompt;
         //speechOutput = descriptionOutput;
@@ -142,6 +143,9 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
         console.log(userInput);
 
         var descriptionOutput = await GetMagicTerm(userInput);
+
+        console.log(descriptionOutput);
+
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = descriptionOutput;
 
@@ -293,44 +297,41 @@ function replaceAmpersand(mString) {
     return mString.replace(regExpr, "and");
 }
 
+async function GetDatabaseTable(name){
+    let data = await db.scan({TableName: name}).promise();
+    return data.Items;
+}
+
+async function LoadDatabaseData(){
+    let data;
+
+    if (dataGame.MagicTerms == undefined){
+        data = await GetDatabaseTable("MBM_MagicTerms");
+        dataGame.MagicTerms = new game.MagicTerms(data);
+    }
+    if (dataGame.ListObjects == undefined){
+        data = await GetDatabaseTable("MBM_ListObject");
+        dataGame.ListObjects = new game.ListObjects(data);
+    }
+    if (dataGame.RandomCharts == undefined){
+        data = await GetDatabaseTable("MBM_RandomChart");
+        dataGame.RandomCharts = new game.RandomCharts(data);
+    }
+    if (dataGame.RollingCharts == undefined){
+        data = await GetDatabaseTable("MBM_RollingChart");
+        dataGame.RollingCharts = new game.RollingCharts(data);
+    }
+}
+
+
 //extra functions & items to be used:
 async function GetMagicTerm(term) {
-    if (data_MagicTerms == undefined) {
-        let params = {
-            TableName: 'MBM_MagicTerms' //the DB table name that is being used.
-        };
-
-        data_MagicTerms = await docClient.scan(params).promise();
-        data_MagicTerms = data_MagicTerms.Items;
-    }
-
-    for (let i = 0; i < data_MagicTerms.length; i++) {
-        if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()) {
-            return data_MagicTerms[i].Description;
-        }
-    }
-    return "Sorry, I don't know that Magic term.";
+    await LoadDatabaseData();
+    return dataGame.MagicTerms.find(term);
 }
 async function GetListObjectByNameAndType(name, type) {
-    if (data_ListObjects == undefined) {
-        console.log("Load list objects");
-        let params = {
-            TableName: 'MBM_ListObject' //the DB table name that is being used.
-        };
-
-        data_ListObjects = await docClient.scan(params).promise();
-        data_ListObjects = data_ListObjects.Items;
-    }
-
-    console.log("Length: " + data_ListObjects.length);
-
-    for (let i = 0; i < data_ListObjects.length; i++) {
-        if (data_ListObjects[i].Name.toLowerCase() == name.toLowerCase() &&
-            data_ListObjects[i].Type.toLowerCase() == type.toLowerCase()) {
-            return data_ListObjects[i];
-        }
-    }
-    return undefined;
+    await LoadDatabaseData();
+    return dataGame.ListObjects.findByNameAndType(name, type);
 }
 
 
