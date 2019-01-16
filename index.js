@@ -5,6 +5,9 @@ const AWS = require('aws-sdk');
 const request = require('request');
 const parseString = require('xml2js').parseString;
 var data_MagicTerms = undefined;
+var data_ListObjects = undefined;
+
+const game = require("./game");
 
 //DynamoDB information:
 var docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
@@ -92,6 +95,37 @@ const MainMenuIntentHandler = {
         return handlerInput.responseBuilder
             .speak(speechOutput)
             .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+
+
+const NewGameIntentHandler = { 
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'NewGame';
+    },
+    async handle(handlerInput) {
+        var speechOutput = "";
+        const numberOfPlayers = handlerInput.requestEnvelope.request.intent.slots.NumberOfPlayers.value;
+        console.log(numberOfPlayers);
+
+        var listObj = await GetListObjectByNameAndType("Archenemy", "TeamType");
+        console.log(listObj);
+        console.log(game);
+
+        var g = new game.ListObject(listObj);
+        console.log(g);
+
+        //var descriptionOutput = await GetMagicTerm(userInput);
+        var reprompt = ALEXA_RESPONSES.reprompt;
+        //speechOutput = descriptionOutput;
+        speechOutput = "Starting a " + numberOfPlayers + " player game...";
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
             .getResponse();
     }
 };
@@ -225,6 +259,7 @@ const ErrorHandler = {
 //this is the information it's sending out to the Lambda to be used.
 exports.handler = skillBuilder
     .addRequestHandlers(
+        NewGameIntentHandler,
         GreetingIntentHandler,
         WhatIsIntentHandler,
         HowToIntentHandler,
@@ -260,10 +295,7 @@ function replaceAmpersand(mString) {
 
 //extra functions & items to be used:
 async function GetMagicTerm(term) {
-    data_MagicTerms = undefined;
-
     if (data_MagicTerms == undefined) {
-        console.log("Load magic terms");
         let params = {
             TableName: 'MBM_MagicTerms' //the DB table name that is being used.
         };
@@ -272,15 +304,35 @@ async function GetMagicTerm(term) {
         data_MagicTerms = data_MagicTerms.Items;
     }
 
-    console.log("Length: " + data_MagicTerms.length);
-
     for (let i = 0; i < data_MagicTerms.length; i++) {
         if (data_MagicTerms[i].Name.toLowerCase() == term.toLowerCase()) {
             return data_MagicTerms[i].Description;
         }
     }
+    return "Sorry, I don't know that Magic term.";
+}
+async function GetListObjectByNameAndType(name, type) {
+    if (data_ListObjects == undefined) {
+        console.log("Load list objects");
+        let params = {
+            TableName: 'MBM_ListObject' //the DB table name that is being used.
+        };
+
+        data_ListObjects = await docClient.scan(params).promise();
+        data_ListObjects = data_ListObjects.Items;
+    }
+
+    console.log("Length: " + data_ListObjects.length);
+
+    for (let i = 0; i < data_ListObjects.length; i++) {
+        if (data_ListObjects[i].Name.toLowerCase() == name.toLowerCase() &&
+            data_ListObjects[i].Type.toLowerCase() == type.toLowerCase()) {
+            return data_ListObjects[i];
+        }
+    }
     return undefined;
 }
+
 
 function doRequest(url) {
     return new Promise(function(resolve, reject) {
