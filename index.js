@@ -107,15 +107,19 @@ const NewGameIntentHandler = {
             request.intent.name === 'NewGame';
     },
     async handle(handlerInput) {
-        var speechOutput = "";
+        let speechOutput = "";
         const numberOfPlayers = handlerInput.requestEnvelope.request.intent.slots.NumberOfPlayers.value;
 
         await LoadDatabaseData();
-        var randomGame = dataGame.RandomCharts.random(numberOfPlayers);
 
-        var reprompt = ALEXA_RESPONSES.reprompt;
+        dataGame.CreateNewGame(numberOfPlayers);
+        
+        console.log(dataGame.CurrentGame);
+        console.log(dataGame.CurrentGame.Announcement());
+
+        let reprompt = ALEXA_RESPONSES.reprompt;
         //speechOutput = "Starting a " + numberOfPlayers + " player game...";
-        speechOutput = randomGame.Annoucement;
+        speechOutput = dataGame.CurrentGame.Announcement();
 
         return handlerInput.responseBuilder
             .speak(speechOutput)
@@ -320,11 +324,11 @@ async function LoadDatabaseData(){
 //extra functions & items to be used:
 async function GetMagicTerm(term) {
     await LoadDatabaseData();
-    return dataGame.MagicTerms.find(term);
+    return dataGame.MagicTerms.Find(term);
 }
 async function GetListObjectByNameAndType(name, type) {
     await LoadDatabaseData();
-    return dataGame.ListObjects.findByNameAndType(name, type);
+    return dataGame.ListObjects.FindByNameAndType(name, type);
 }
 
 

@@ -4,17 +4,33 @@ class Data {
         this.MagicTerms = undefined;
         this.RollingCharts = undefined;
         this.RandomCharts = undefined;
-        this.Game = undefined;
+        this.CurrentGame = undefined;
     }
 
-    newGame(numPlayers){
-        let rGame = this.RandomCharts().random(numPlayers);
+    CreateNewGame(numPlayers){
+        let rGame = this.RandomCharts.Random(numPlayers);
 
-        //if (rGame.BuildType.toLowerCase() == "{roll}"){
-        //    rGame.BuildType = this.RollingCharts.random()
-        //}
+        this.CurrentGame = new GameObject();
+        this.CurrentGame.Game = rGame;
 
-        //this.Game = 
+        if (rGame.BuildType.toLowerCase() == "{roll}")
+        {
+            this.CurrentGame.BuildType = this.RollingCharts.Random("BuildType");
+        }
+        if (rGame.ElementType.toLowerCase() == "{roll}")
+        {
+            this.CurrentGame.ElementType = this.RollingCharts.Random("ElementType");
+        }
+        //TODO - SubElement when reroll causes two types
+
+        if (rGame.GameType.toLowerCase() == "{roll}")
+        {
+            this.CurrentGame.GameType = this.RollingCharts.Random("GameType");
+        }
+        if (rGame.TeamType.toLowerCase() == "{roll}")
+        {
+            this.CurrentGame.TeamType = this.RollingCharts.Random("TeamType");
+        }
     }
 }
 
@@ -27,7 +43,7 @@ class ListObjects {
         }
     }
 
-    findByNameAndType(name, type) {
+    FindByNameAndType(name, type) {
         for(let i = 0; i < this.Items.length; i++){
             if (this.Items[i].Name.toLowerCase() == name.toLowerCase() &&
                 this.Items[i].Type.toLowerCase() == type.toLowerCase())
@@ -56,7 +72,7 @@ class MagicTerms {
         }
     }
 
-    find(term) {
+    Find(term) {
         for(let i = 0; i < this.Items.length; i++){
             if (this.Items[i].Name.toLowerCase() == term.toLowerCase()){
                 return this.Items[i].Description;
@@ -80,7 +96,7 @@ class RollingCharts {
         }
     }
 
-    random(type, exclude) {
+    Random(type, exclude) {
         let list = [];
         let item;
         let range = 0;
@@ -135,7 +151,7 @@ class RandomCharts {
         }
     }
 
-    random(numPlayers) {
+    Random(numPlayers) {
         let list = [];
         let item;
         let range = 0;
@@ -191,6 +207,25 @@ class GameObject {
         this.TeamType = undefined;
     }
 
+    Announcement( ){
+        let text = this.Game.Announcement;
+        
+        console.log(text);
+
+        if (this.BuildType != undefined) {
+            text = text.replace("{build}", this.BuildType.Announcement);
+        }
+        if (this.ElementType != undefined){
+            text = text.replace("{element}", this.ElementType.Announcement);
+        }
+        if (this.GameType != undefined) {
+            text = text.replace("{type}", this.GameType.Announcement);
+        }
+        if (this.TeamType != undefined) {
+            text = text.replace("{team}", this.TeamType.Announcement);
+        }
+        return text;
+    }
 
 }
 
