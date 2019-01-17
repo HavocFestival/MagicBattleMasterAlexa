@@ -7,7 +7,7 @@ const request = require('request');
 const game = require("./game");
 
 var dataGame = new game.Data();
-
+var dataOptions = [];
 
 //DynamoDB information:
 var db = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
@@ -17,7 +17,7 @@ AWS.config.update({ region: 'us-east-1' });
 //variables to keep on hand:
 const ALEXA_RESPONSES = {
     skillName: 'Magic the Gathering Battle Master',
-    openMessage: 'Welcome to Magic Battle Master, your fun source for Magic The Gathering game variations.  How would you like' +
+    openMessage: 'Welcome to Magic Battle Master, your fun source for Magic The Gathering game variations.  How would you like ' +
         'to get started?  You can say Main Menu if you want a summary of options or jump directly to what you want.',
     reprompt: 'If you\'re not sure what to ask for, just say Main Menu for availble options.',
     stopMessageSpeak: 'Thank you for using Magic Battle Master, please return for Magic The Gathering variations and terminology information. Goodbye!',
@@ -99,7 +99,6 @@ const MainMenuIntentHandler = {
     }
 };
 
-
 const NewGameIntentHandler = { 
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -113,14 +112,37 @@ const NewGameIntentHandler = {
         await LoadDatabaseData();
 
         dataGame.CreateNewGame(numberOfPlayers);
-        
+
         console.log(dataGame.CurrentGame);
-        console.log(dataGame.CurrentGame.Announcement());
 
         let reprompt = ALEXA_RESPONSES.reprompt;
         //speechOutput = "Starting a " + numberOfPlayers + " player game...";
         speechOutput = dataGame.CurrentGame.Announcement();
 
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+
+const CurrentGameIntentHandler = { 
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'CurrentGame';
+    },
+    handle(handlerInput) {
+        let speechOutput = "";
+
+        if (dataGame.CurrentGame != undefined){
+            speechOutput = dataGame.CurrentGame.Announcement();            
+        }        
+        else {
+            speechOutput = "There is no current game. To begin a new game say, start a new game with how many players.";
+        }
+
+        let reprompt = ALEXA_RESPONSES.reprompt;
         return handlerInput.responseBuilder
             .speak(speechOutput)
             .reprompt(reprompt) //give the user another chance to say something.
@@ -137,12 +159,8 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
     async handle(handlerInput) {
         var speechOutput = "";
         const userInput = handlerInput.requestEnvelope.request.intent.slots.term.resolutions.resolutionsPerAuthority[0].values[0].value.name;
-        console.log(userInput);
 
         var descriptionOutput = await GetMagicTerm(userInput);
-
-        console.log(descriptionOutput);
-
         var reprompt = ALEXA_RESPONSES.reprompt;
         speechOutput = descriptionOutput;
 
@@ -152,6 +170,84 @@ const TermsIntentHandler = { //pick from the terms that the user has asked abou
             .getResponse();
     }
 };
+
+const CurrentOptionsIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'CurrentOptions';
+    },
+    async handle(handlerInput) {
+        var speechOutput = "";
+
+        var reprompt = ALEXA_RESPONSES.reprompt;
+        if (dataOptions.length == 0){
+            speechOutput = "There are currently no options added.";
+        }
+        else {
+            let text = dataOptions.join(", ");
+            let index = text.lastIndexOf(", ");
+            if (index >= 0) {
+                text = text.substring(0, index) + ", and " + text.substring(index + 2);
+            }
+
+            speechOutput = "The current options are " + text;
+        }
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+const ChangeOptionIntentHandler = {
+    canHandle(handlerInput) { 
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'ChangeOption';
+    },
+    async handle(handlerInput) {
+        var speechOutput = "";
+        const action = handlerInput.requestEnvelope.request.intent.slots.action.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+        const option = handlerInput.requestEnvelope.request.intent.slots.supplemental.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+
+        var reprompt = ALEXA_RESPONSES.reprompt;
+        speechOutput = "I will " + action + " the " + option + " option";
+
+        if (action == "add"){
+            if (dataOptions.indexOf(option) == -1){
+                dataOptions.push(option);
+            }
+        }
+        if (action == "remove"){
+            for(let i = 0; i < dataOptions.length-1; i++){ 
+                if (dataOptions[i] === option) {
+                    dataOptions.splice(i, 1); 
+                }
+             }
+             if (dataOptions.length > 0){
+                let text = dataOptions.join(", ");
+                let index = text.lastIndexOf(", ");
+                if (index >= 0) {
+                    text = text.substring(0, index) + ", and " + text.substring(index + 2);
+                }
+    
+                 speechOutput += ". That leaves " + text + " options.";
+             }
+             else {
+                 speechOutput += ". Now there are currently no options set.";
+             }
+        }
+
+        console.log(dataOptions);
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+
 
 //The following are the built-in Amazon Intent Handlers:
 const FallbackIntentHandler = { //fall back event if the user say something that is not understood.
@@ -242,6 +338,27 @@ const NavigateHomeIntentHandler = { //navigate back to the main menu from anythi
     }
 };
 
+const ResetDataIntentHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' &&
+            request.intent.name === 'ResetData';
+    },
+    async handle(handlerInput) {
+        var speechOutput = "";
+        speechOutput = "Ok, I've reset the database data.";
+
+        dataGame = new game.Data();
+        await LoadDatabaseData();
+
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(ALEXA_RESPONSES.reprompt) //give the user another chance to say something.
+            .getResponse();
+    }
+};
+
+
 const ErrorHandler = {
     canHandle() {
         return true;
@@ -261,15 +378,19 @@ const ErrorHandler = {
 exports.handler = skillBuilder
     .addRequestHandlers(
         NewGameIntentHandler,
+        CurrentGameIntentHandler,
         GreetingIntentHandler,
         WhatIsIntentHandler,
         HowToIntentHandler,
         MainMenuIntentHandler,
+        CurrentOptionsIntentHandler,
+        ChangeOptionIntentHandler,
         TermsIntentHandler,
         FallbackIntentHandler,
         CancelIntentHandler,
         HelpIntentHandler,
         StopIntentHandler,
+        ResetDataIntentHandler,
         NavigateHomeIntentHandler
     )
 

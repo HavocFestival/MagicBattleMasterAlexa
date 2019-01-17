@@ -16,20 +16,37 @@ class Data {
         if (rGame.BuildType.toLowerCase() == "{roll}")
         {
             this.CurrentGame.BuildType = this.RollingCharts.Random("BuildType");
+        } else if (rGame.BuildType.toLowerCase() != "") {
+            this.CurrentGame.BuildType = this.RollingCharts.FindByNameAndType(rGame.BuildType, "BuildType");
         }
+
         if (rGame.ElementType.toLowerCase() == "{roll}")
         {
             this.CurrentGame.ElementType = this.RollingCharts.Random("ElementType");
+        } else if (rGame.ElementType.toLowerCase() != "") {
+            this.CurrentGame.ElementType = this.RollingCharts.FindByNameAndType(rGame.ElementType, "ElementType");
         }
-        //TODO - SubElement when reroll causes two types
+    //TODO - SubElement when reroll causes two types
 
         if (rGame.GameType.toLowerCase() == "{roll}")
         {
             this.CurrentGame.GameType = this.RollingCharts.Random("GameType");
+        } else if (rGame.GameType.toLowerCase() != "") {
+            this.CurrentGame.GameType = this.RollingCharts.FindByNameAndType(rGame.GameType, "GameType");
         }
+
         if (rGame.TeamType.toLowerCase() == "{roll}")
         {
             this.CurrentGame.TeamType = this.RollingCharts.Random("TeamType");
+        } else if (rGame.TeamType.toLowerCase() != "") {
+            this.CurrentGame.TeamType = this.RollingCharts.FindByNameAndType(rGame.TeamType, "TeamType");
+        }
+
+        if (rGame.ChallengeType.toLowerCase() == "{roll}")
+        {
+            this.CurrentGame.ChallengeType = this.RollingCharts.Random("ChallengeType");
+        } else if (rGame.ChallengeType.toLowerCase() != "") {
+            this.CurrentGame.ChallengeType = this.RollingCharts.FindByNameAndType(rGame.ChallengeType, "ChallengeType");
         }
     }
 }
@@ -94,6 +111,19 @@ class RollingCharts {
         for(let i = 0; i < data.length; i++){
             this.Items.push(new RollingChart(data[i]));
         }
+    }
+
+    FindByNameAndType(name, type){
+        var item;
+        for(let i = 0; i < this.Items.length; i++){
+            item = this.Items[i];
+            if (item.ChartType.toLowerCase() == type.toLowerCase() &&
+                item.Name.toLowerCase() == name.toLowerCase())
+                {
+                    return item;
+                }
+        }
+        return undefined;
     }
 
     Random(type, exclude) {
@@ -192,6 +222,7 @@ class RandomChart {
         this.Team = FormatString(data.team);
         this.TeamType = FormatString(data.TeamType);
         this.TeamSlots = data.TeamSlots;
+        this.ChallengeType = FormatString(data.ChallengeType);
     }
 }
 
@@ -203,14 +234,14 @@ class GameObject {
         this.GameType = undefined;
         this.BuildType = undefined;
         this.ElementType = undefined;
+        this.ChallengeType = undefined;
         this.SubElementType = undefined;
         this.TeamType = undefined;
+        this.ChallengeType = undefined;
     }
 
     Announcement( ){
         let text = this.Game.Announcement;
-        
-        console.log(text);
 
         if (this.BuildType != undefined) {
             text = text.replace("{build}", this.BuildType.Announcement);
@@ -223,6 +254,9 @@ class GameObject {
         }
         if (this.TeamType != undefined) {
             text = text.replace("{team}", this.TeamType.Announcement);
+        }
+        if (this.ChallengeType != undefined){
+            text = text.replace("{challenge}", this.ChallengeType.Announcement);
         }
         return text;
     }
