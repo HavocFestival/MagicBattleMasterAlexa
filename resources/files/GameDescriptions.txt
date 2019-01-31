@@ -1,0 +1,73 @@
+Archenemy
+	Archenemy is a casual multiplayer format designed for "one vs. many" gameplay. In an Archenemy game, one player takes on the titular role and uses an increased life total and a deck of non-traditional scheme cards to play against a team of variable size.
+
+Archon
+
+
+Assassin
+
+
+AttackLeft
+In Attack Left players may only attack the opponent to their left.  All other Spells (sorceries, instants and enchantments) may go any direction.
+
+AttackRight
+In Attack Right players may only attack the opponent to their right.  All other Spells (sorceries, instants and enchantments) may go any direction.
+
+Bolas
+Similar to Archenemy (1 vs many), Nicol Bolas is on the rampage and a team of players (ideally 3+) will band together to take down the draconic tyrant and stop his domination to the multiverse. 
+
+Commander
+
+
+Dragon
+The Dragon Guild build variant requires that your deck consist of at least 3 colors of spells in it (similar to the Guild variant).
+
+DualWield
+With the dual wield variant a player or players will utilize two decks eath for play instead of the standard one deck.  Standard or variant rules may apply as desired.
+
+Emperor
+The Emperor game variant takes two plus teams of at least 3 and pits them against one another, each team will have two Generals and one Emperor.  The Emperor sits between their two Generals for the duration of the game.  Emperors can summon armies and throw spells while the Generals wage war against one another to insure their Empire is the last standing.
+
+Faction
+
+
+Formation
+
+
+FreeForAll
+
+
+Guild
+
+
+Horde
+
+
+Hydra
+
+
+Planechase
+
+
+Planeswalker
+
+
+Shadowdome
+
+
+Sheriff
+
+
+Standard
+
+
+Star
+
+
+TwoHeadedGiant
+
+
+Vanguard
+
+
+Xenagos

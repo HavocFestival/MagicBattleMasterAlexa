@@ -1,0 +1,45 @@
+MtG Formation
+Formation is a team variant that uses grid style combat. Two or more teams are formed consisting of at least 2 players per team. Once the teams are selected they coordinate their positions, choosing either to be in front or in back. Each Team Member has their own life totals and all of the team members must be eliminated by normal MTG rules - lose of life or no longer being able to draw cards. All other aspects of the game work like a normal duel with a few exceptions.
+
+
+
+·        Spells – Spells can only target legal targets within two positions of the caster. So a player in the back may only select targets in their backrow, their front row and the opposing team’s front row until a member of the opposing team has been eliminated. Then they may target the exposed backrow player and their permanents and spells. A front row player may target any player and their permanents and spells because they are within two spots of all other players.
+
+·        Combat – A player may only declare attacks against a player within 1 spot of their position. So a player in the front row may attack any player in the front row of the opposing team. A player can never attack a member of their own team, regardless of any spell effect. There are two exceptions to the attack position, creatures with Flying, may be declared as attackers to players two spots from their controller. For example a player in the backrow may declare attackers with flying against an opposing player in the front row of the opposing team, or an exposed player in the backrow of an opposing team. Creatures with a Landwalk ability may be declared as attacking any member of the opposing team regardless of position. Banding does not give a creature without Flying or Landwalk this exception.
+
+·        Each Team takes their turns together. They go through the phases of a turn simultaneously.
+
+MtG Duel Wield
+Duel Wield is a variant developed by Castleton Productions which mirrors the Two Headed Giant variant in which a player plays both heads of the Two Headed Giant team with two separate decks. In all other aspects it functions like Two Headed Giant, in which the player is considered to be two separate players for determining spell effects and attacks.
+
+ 
+MtG Assassin
+Assassin is a game variant developed of unknown origins in which a player’s win condition is to defeat their mark. If their mark is defeated, the player who defeated them becomes their new mark. Each player is given a random face up marker to determine their identity. A matching face down marker is randomly distributed between players. A player who receives their marker, indicates that they have and the markers are returned and redistributed between the players until all have received a marker that is not their own. The face down marker indicates the opponent that is their “Mark”. The player they must personally defeat to win the match. Play then continues as normal with the following exception:
+
+·        Combat – A player may only declare attacks against the opponent sitting on their immediate left or right.
+
+ 
+
+MtG Archon
+Archon is a variant of Two Headed Giant, where a team is considered one player. While they each have their own hand, library & graveyard, they share everything else. They all share permanents, life total, battlefield and mana. They each draw a card during the draw step. They each have a starting maximum hand size of 7 cards. They attack and defend as one. They win or lose as a team, so if one of them loses because they are unable to draw a card or an effect causes one of them to lose the game, they all lose. They are considered one player for all game purposes or spell effects. If a spell for example indicates, “Target player draws 2 cards.” They as a team decide which library to draw one or both cards from.
+
+Starting life is 20 +10/per additional team member beyond the first.
+
+ 
+MtG Affiliation
+Affiliation is a variant designed by Castleton Productions where a team is formed at random in secret at the start of the game. The players do not who is on their team until other players reveal themselves. At the start of the match it is determined how many teams there will be. The only caveat is that the teams must have an equal number of players. The players are then handed a face down marker indicating which team they are on and handed a face down Affiliation Card. The Affiliation card either grants an effect upon being revealed or an ongoing effect that grants an ability to those team members who are revealed. Each Affiliation Card indicates when a player may reveal their affiliation to gain the benefit of the effect on the card. All team members are considered opponents until they are revealed to be on your team. Spells and effects that only can target or only affect opponents, no longer affect your teammates once revealed. Also once revealed to be a member of your team, you are no longer able to declare attacks on that player. All other aspects of the game are standard. Once all of your opponents are defeated, your team wins the match.
+
+ 
+MtG Dragon Guild
+Dragon Guild is a build variant in which your deck is required to have 3 or more colors of spells in it, similar to the Guild variant. Game play is the same as any standard or variant gameplay.
+
+ 
+MtG Megalith
+Megalith is a build variant in which your deck is required to have a minimum of 200 cards. Game play is the same as any standard or variant gameplay.
+
+ 
+MtG Planesmaster
+Planesmaster is a variant designed by Castleton Productions in which players agree to 1d4, 1d6 or a set number of levels to their Planesmaster Avatar. All players start the match with the same number of levels. A player begins play with 5 additional life and 1 basic land in play per level of their Planesmaster Avatar. Each player is dealt an agreed upon random selection of Avatar Cards. They function similarly to a Vanguard. They cannot be targeted, they do not count as a permanent. However, they do grant the player ability to count as a creature type, such as Zombie or Knight. All spell effects that count the number of a specific creature type for an effect also count the player themselves in that count. They gain 1 level whenever they defeat an opponent by reducing their life to or below 0. They gain 5 life and may search their library for 1 basic land and put it into play. If playing on team, and the team defeats an opponent in combat, each player whose creature dealt combat damage to the defeated player, all gain 1 level. This variant plays in all other aspects the same as the standard or other variant game play agreed upon at the start of the match.
+
+ 
+
